@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import ExerciseCard from "./components/ExerciseCard";
+import ExerciseCard from "./components/ExerciseCard.jsx";
 
 const presets = {
   classic: {
