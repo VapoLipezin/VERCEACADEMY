@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ExerciseCard({ name, rest = 60 }) {
+export default function ExerciseCard({ exercise, value, onChange, onStartRest }) {
 
 const [weight, setWeight] = useState("");
 const [reps, setReps] = useState("");
