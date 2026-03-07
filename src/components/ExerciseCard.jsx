@@ -1,4 +1,5 @@
 import React from "react";
+import { getSuggestedWeight } from "../utils/progression"
 
 export default function ExerciseCard({ exercise, value = {}, onChange, onStartRest }) {
   return (
