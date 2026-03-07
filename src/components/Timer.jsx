@@ -1,20 +1,27 @@
-import { useState } from "react";
+
+import {useState} from "react"
 
 export default function Timer(){
 
-const [time,setTime] = useState(90);
+const [time,setTime]=useState(90)
+const [running,setRunning]=useState(false)
 
-const startTimer = () => {
+function start(){
 
-let t = time
+if(running)return
 
-const interval = setInterval(()=>{
+setRunning(true)
+
+let t=time
+
+const interval=setInterval(()=>{
 
 t--
 setTime(t)
 
 if(t<=0){
 clearInterval(interval)
+setRunning(false)
 alert("Descanso finalizado")
 }
 
@@ -23,19 +30,14 @@ alert("Descanso finalizado")
 }
 
 return(
-
-<div className="timer">
+<div className="card">
 
 <h2>Descanso</h2>
 
-<p>{time}s</p>
+<h3>{time}s</h3>
 
-<button onClick={startTimer}>
-Iniciar
-</button>
+<button onClick={start}>Iniciar</button>
 
 </div>
-
 )
-
 }

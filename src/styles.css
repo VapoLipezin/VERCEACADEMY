@@ -1,3 +1,4 @@
+
 body{
 font-family:Arial;
 background:#0f172a;
@@ -7,26 +8,16 @@ padding:0;
 }
 
 .container{
-max-width:500px;
+max-width:600px;
 margin:auto;
 padding:20px;
 }
 
 .card{
 background:#1e293b;
-padding:15px;
+padding:16px;
 border-radius:12px;
-margin-bottom:15px;
-}
-
-button{
-background:#22c55e;
-border:none;
-padding:10px;
-color:white;
-border-radius:8px;
-cursor:pointer;
-margin-top:8px;
+margin-bottom:16px;
 }
 
 input{
@@ -34,19 +25,28 @@ width:100%;
 padding:10px;
 border-radius:8px;
 border:none;
-margin-top:8px;
+margin-top:10px;
 }
 
-.timer{
-background:#1e293b;
-padding:15px;
-border-radius:12px;
-margin-bottom:15px;
-}
-
-.history-card{
-background:#334155;
+button{
 padding:10px;
+border:none;
 border-radius:8px;
-margin-top:5px;
+margin-top:10px;
+cursor:pointer;
+background:#22c55e;
+color:white;
+}
+
+.series{
+margin-top:8px;
+font-size:14px;
+opacity:0.8;
+}
+
+.dashboard{
+background:#1e293b;
+padding:16px;
+border-radius:12px;
+margin-top:20px;
 }
