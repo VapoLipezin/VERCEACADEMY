@@ -1,83 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function ExerciseCard({ exercise, value = {}, onChange, onStartRest }) {
+  return (
+    <div className="exercise-card">
+      <div className="exercise-head">
+        <div>
+          <h3>{exercise.name}</h3>
+          <p>
+            {exercise.sets} séries • {exercise.reps} reps • descanso {exercise.rest}s
+          </p>
+        </div>
 
-const [weight, setWeight] = useState("");
-const [reps, setReps] = useState("");
-const [resting, setResting] = useState(false);
-const [timeLeft, setTimeLeft] = useState(exercise.rest);
+        <button
+          className="ghost-button"
+          onClick={() => onStartRest(exercise.rest)}
+        >
+          Descanso
+        </button>
+      </div>
 
-function startRest(){
+      <div className="exercise-grid">
+        <label>
+          <span>Carga</span>
+          <input
+            value={value.weight || ""}
+            onChange={(e) =>
+              onChange({ ...value, weight: e.target.value })
+            }
+            placeholder="Ex: 20 kg"
+          />
+        </label>
 
-if(resting) return;
+        <label>
+          <span>Repetições feitas</span>
+          <input
+            value={value.doneReps || ""}
+            onChange={(e) =>
+              onChange({ ...value, doneReps: e.target.value })
+            }
+            placeholder="Ex: 10"
+          />
+        </label>
+      </div>
 
-setResting(true);
-
-let t = exercise.rest;
-
-const interval = setInterval(()=>{
-
-t--;
-
-setTimeLeft(t);
-
-if(t <= 0){
-clearInterval(interval);
-setResting(false);
-setTimeLeft(exercise.rest);
-}
-
-},1000);
-
-}
-
-const progress = (timeLeft / exercise.rest) * 100;
-
-return (
-
-<div className="exercise-card">
-
-<h3>{exercise.name}</h3>
-
-<input
-type="number"
-placeholder="Peso (kg)"
-value={weight}
-onChange={(e)=>{
-setWeight(e.target.value)
-onChange?.({ ...value, weight: e.target.value })
-}}
-/>
-
-<input
-type="number"
-placeholder="Reps"
-value={reps}
-onChange={(e)=>{
-setReps(e.target.value)
-onChange?.({ ...value, doneReps: e.target.value })
-}}
-/>
-
-<button onClick={()=>{
-startRest()
-onStartRest?.(exercise.rest)
-}}>
-Descanso
-</button>
-
-{resting && (
-
-<div className="rest-bar">
-<div
-className="rest-progress"
-style={{width: `${progress}%`}}
-></div>
-</div>
-
-)}
-
-</div>
-
-);
+      <label className="check-row">
+        <input
+          type="checkbox"
+          checked={Boolean(value.completed)}
+          onChange={(e) =>
+            onChange({ ...value, completed: e.target.checked })
+          }
+        />
+        <span>Concluído</span>
+      </label>
+    </div>
+  );
 }
