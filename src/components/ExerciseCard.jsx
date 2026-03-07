@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function ExerciseCard({ exercise, value, onChange, onStartRest }) {
+export default function ExerciseCard({ exercise, value = {}, onChange, onStartRest }) {
 
 const [weight, setWeight] = useState("");
 const [reps, setReps] = useState("");
 const [resting, setResting] = useState(false);
-const [timeLeft, setTimeLeft] = useState(rest);
+const [timeLeft, setTimeLeft] = useState(exercise.rest);
 
 function startRest(){
 
@@ -13,7 +13,7 @@ if(resting) return;
 
 setResting(true);
 
-let t = rest;
+let t = exercise.rest;
 
 const interval = setInterval(()=>{
 
@@ -24,36 +24,47 @@ setTimeLeft(t);
 if(t <= 0){
 clearInterval(interval);
 setResting(false);
-setTimeLeft(rest);
+setTimeLeft(exercise.rest);
 }
 
 },1000);
 
 }
 
-const progress = (timeLeft / rest) * 100;
+const progress = (timeLeft / exercise.rest) * 100;
 
 return (
 
 <div className="exercise-card">
 
-<h3>{name}</h3>
+<h3>{exercise.name}</h3>
 
 <input
 type="number"
 placeholder="Peso (kg)"
 value={weight}
-onChange={(e)=>setWeight(e.target.value)}
+onChange={(e)=>{
+setWeight(e.target.value)
+onChange?.({ ...value, weight: e.target.value })
+}}
 />
 
 <input
 type="number"
 placeholder="Reps"
 value={reps}
-onChange={(e)=>setReps(e.target.value)}
+onChange={(e)=>{
+setReps(e.target.value)
+onChange?.({ ...value, doneReps: e.target.value })
+}}
 />
 
-<button onClick={startRest}>Descanso</button>
+<button onClick={()=>{
+startRest()
+onStartRest?.(exercise.rest)
+}}>
+Descanso
+</button>
 
 {resting && (
 
