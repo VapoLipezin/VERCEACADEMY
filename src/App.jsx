@@ -202,16 +202,16 @@ export default function App() {
   const exercises = customPlan[selectedDay] || [];
   const dayState = workouts[todayKey()]?.[selectedDay] || {};
 
- const totalSets = exercises.reduce((acc, ex) => acc + ex.sets, 0);
+const totalSets = exercises.reduce((acc, ex) => acc + ex.sets, 0);
 
 const completedSets = exercises.reduce((acc, ex) => {
-  const exerciseState = dayState[ex.name];
+  const exerciseData = dayState[ex.name];
 
-  if (!exerciseState?.sets) return acc;
+  if (!exerciseData?.sets) return acc;
 
-  const doneSets = exerciseState.sets.filter((s) => s.completed).length;
+  const done = exerciseData.sets.filter((s) => s.completed).length;
 
-  return acc + doneSets;
+  return acc + done;
 }, 0);
 
 const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
