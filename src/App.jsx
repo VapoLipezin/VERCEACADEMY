@@ -202,8 +202,19 @@ export default function App() {
   const exercises = customPlan[selectedDay] || [];
   const dayState = workouts[todayKey()]?.[selectedDay] || {};
 
-  const completedCount = exercises.filter((item) => dayState[item.name]?.completed).length;
-  const progress = exercises.length ? Math.round((completedCount / exercises.length) * 100) : 0;
+ const totalSets = exercises.reduce((acc, ex) => acc + ex.sets, 0);
+
+const completedSets = exercises.reduce((acc, ex) => {
+  const exerciseState = dayState[ex.name];
+
+  if (!exerciseState?.sets) return acc;
+
+  const doneSets = exerciseState.sets.filter((s) => s.completed).length;
+
+  return acc + doneSets;
+}, 0);
+
+const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
 
   const weeklyDone = useMemo(() => {
     return Object.values(workouts).reduce((acc, splitDays) => {
