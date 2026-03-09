@@ -1,3 +1,7 @@
+@media (prefers-color-scheme: dark){
+  /* dark theme */
+}
+
 * {
   box-sizing: border-box;
 }
