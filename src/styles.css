@@ -317,6 +317,29 @@ box-shadow:0 6px 20px rgba(34,197,94,0.5);
   font-size: 0.92rem;
 }
 
+/* =========================
+   SÉRIES DO EXERCÍCIO
+========================= */
+
+.sets-container{
+margin-top:14px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.set-row{
+display:grid;
+grid-template-columns:90px 1fr 1fr 40px;
+gap:10px;
+align-items:center;
+}
+
+.set-row span{
+color:#94a3b8;
+font-size:14px;
+}
+
 .exercise-grid,
 .mini-grid {
   display: grid;
