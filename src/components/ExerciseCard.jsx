@@ -1,77 +1,65 @@
 import React from "react";
-import { getSuggestedWeight } from "../utils/progression";
 
 export default function ExerciseCard({ exercise, value = {}, onChange, onStartRest }) {
 
-  const sets = value.sets || Array.from({ length: exercise.sets }, () => ({
-    weight: "",
-    reps: "",
-    done: false
-  }));
+const sets = value.sets || Array.from({ length: exercise.sets }, () => ({
+  weight: "",
+  reps: "",
+  completed: false
+}));
 
-  function updateSet(index, field, newValue){
-    const newSets = [...sets];
-    newSets[index][field] = newValue;
-    onChange({ ...value, sets: newSets });
-  }
+function updateSet(index, field, val){
+  const updated = [...sets];
+  updated[index] = { ...updated[index], [field]: val };
 
-  function toggleSet(index){
-    const newSets = [...sets];
-    newSets[index].done = !newSets[index].done;
-    onChange({ ...value, sets: newSets });
-  }
+  onChange({
+    ...value,
+    sets: updated
+  });
+}
 
-  return (
-    <div className="exercise-card">
+return (
+<div className="exercise-card">
 
-      <div className="exercise-head">
-        <div>
-          <h3>{exercise.name}</h3>
-          <p>
-            {exercise.sets} séries • {exercise.reps} reps • descanso {exercise.rest}s
-          </p>
-        </div>
+<div className="exercise-head">
+<div>
+<h3>{exercise.name}</h3>
+<p>
+{exercise.sets} séries • {exercise.reps} reps • descanso {exercise.rest}s
+</p>
+</div>
 
-        <button
-          className="primary-button"
-          onClick={() => onStartRest(exercise.rest)}
-        >
-          Descanso
-        </button>
-      </div>
+<button onClick={() => onStartRest(exercise.rest)}>
+Descanso
+</button>
+</div>
 
-      <div className="sets-container">
+{sets.map((set, i) => (
+<div key={i} className="set-row">
 
-        {sets.map((set, index) => (
+<span>Série {i+1}</span>
 
-          <div className="set-row" key={index}>
+<input
+placeholder="kg"
+value={set.weight}
+onChange={(e)=>updateSet(i,"weight",e.target.value)}
+/>
 
-            <span>Série {index + 1}</span>
+<input
+placeholder="reps"
+value={set.reps}
+onChange={(e)=>updateSet(i,"reps",e.target.value)}
+/>
 
-            <input
-              placeholder="kg"
-              value={set.weight}
-              onChange={(e)=>updateSet(index,"weight",e.target.value)}
-            />
+<input
+type="checkbox"
+checked={set.completed}
+onChange={(e)=>updateSet(i,"completed",e.target.checked)}
+/>
 
-            <input
-              placeholder="reps"
-              value={set.reps}
-              onChange={(e)=>updateSet(index,"reps",e.target.value)}
-            />
+</div>
+))}
 
-            <input
-              type="checkbox"
-              checked={set.done}
-              onChange={()=>toggleSet(index)}
-            />
-
-          </div>
-
-        ))}
-
-      </div>
-
-    </div>
-  );
+</div>
+);
 }
