@@ -8,6 +8,10 @@ useEffect(() => {
   saveWorkout(workoutData);
 }, [workoutData]);
 
+useEffect(() => {
+  localStorage.setItem("workout-data", JSON.stringify(workoutData));
+}, [workoutData]);
+
 const presets = {
   classic: {
     'Peito + Tríceps': [
@@ -129,6 +133,8 @@ const STORAGE = {
   notes: 'app-treino-notes-v1',
 };
 
+
+
 function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -141,6 +147,18 @@ function formatTime(total) {
 
 
 export default function App() {
+    export default function App() {
+
+  const [workoutData, setWorkoutData] = useState(() =>
+    JSON.parse(localStorage.getItem("workout-data") || "{}")
+  );
+
+  function handleExerciseChange(exerciseName, newValue){
+    setWorkoutData(prev => ({
+      ...prev,
+      [exerciseName]: newValue
+    }));
+  }
   const [splitMode, setSplitMode] = useState(() => localStorage.getItem(STORAGE.split) || 'hybrid');
   const [customPlan, setCustomPlan] = useState(() => {
     const saved = localStorage.getItem(STORAGE.plan);
