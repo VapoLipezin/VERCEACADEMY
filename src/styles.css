@@ -1,7 +1,3 @@
-@media (prefers-color-scheme: dark){
-  /* dark theme */
-}
-
 * {
   box-sizing: border-box;
 }
@@ -41,6 +37,26 @@ linear-gradient(180deg,var(--bg2),var(--bg));
 
 button, input, select, textarea {
   font: inherit;
+}
+
+
+input,
+select,
+textarea{
+background:#020617;
+border:1px solid #334155;
+color:#f1f5f9;
+border-radius:14px;
+padding:12px;
+transition:0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+outline:none;
+border-color:#22c55e;
+box-shadow:0 0 0 3px rgba(34,197,94,.2);
 }
 
 button {
@@ -155,7 +171,9 @@ color:#cbd5f5;
 }
 
 .progress-bar{
+height:100%;
 background:linear-gradient(90deg,#22c55e,#4ade80);
+transition:width .3s ease;
 }
 
 .timer-card {
@@ -259,22 +277,6 @@ label:last-child {
   margin-bottom: 0;
 }
 
-input,
-select,
-textarea{
-background:#020617;
-border:1px solid #334155;
-color:#f1f5f9;
-border-radius:14px;
-padding:12px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #94a3b8;
-  box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12);
-}
 
 .full {
   width: 100%;
@@ -313,14 +315,22 @@ color:#022c22;
 box-shadow:0 4px 12px rgba(34,197,94,.5);
 }
 
-/* alinhamento das séries */
-.set-row{
-display:grid;
-grid-template-columns:70px 1fr 1fr 40px;
-gap:10px;
-align-items:center;
-margin-top:10px;
+.exercise-progress{
+width:100%;
+height:6px;
+background:#1e293b;
+border-radius:6px;
+margin-top:8px;
+overflow:hidden;
 }
+
+.exercise-progress-bar{
+height:100%;
+background:linear-gradient(90deg,#22c55e,#4ade80);
+transition:width .3s ease;
+}
+
+/* alinhamento das séries */
 
 .exercise-head {
   display: flex;
@@ -469,14 +479,6 @@ border:1px solid #334155;
   /* =========================
    COMPONENTES DE EXERCÍCIO
 ========================= */
-
-  
-  .exercise-card{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-}
 
 .exercise-card input{
 width:100%;
