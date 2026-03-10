@@ -452,6 +452,13 @@ border:1px solid #334155;
   margin-top: 12px;
 }
 
+.weight-suggestion{
+margin-top:6px;
+font-size:13px;
+color:#22c55e;
+font-weight:600;
+}
+
 @media (max-width: 420px) {
   .stats-grid,
   .exercise-grid,
