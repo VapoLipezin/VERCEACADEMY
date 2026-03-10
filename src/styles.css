@@ -313,6 +313,15 @@ color:#022c22;
 box-shadow:0 4px 12px rgba(34,197,94,.5);
 }
 
+/* alinhamento das séries */
+.set-row{
+display:grid;
+grid-template-columns:70px 1fr 1fr 40px;
+gap:10px;
+align-items:center;
+margin-top:10px;
+}
+
 .exercise-head {
   display: flex;
   justify-content: space-between;
