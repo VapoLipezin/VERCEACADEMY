@@ -1,18 +1,19 @@
-export function getSuggestedWeight(previousWeight, repsDone, repRange) {
+export function getSuggestedWeight(exercise, sets){
 
-const [min, max] = repRange.split("-").map(Number)
+  if(!sets || sets.length === 0) return null
 
-if(!previousWeight) return ""
+  // pega faixa de reps (ex: "8-10")
+  const repsRange = exercise.reps.split("-")
+  const maxReps = parseInt(repsRange[1])
 
-const reps = Number(repsDone)
+  // verifica se todas bateram o topo
+  const allMax = sets.every(set => Number(set.reps) >= maxReps)
 
-if(reps >= max) {
-return previousWeight + 2.5
-}
+  if(!allMax) return null
 
-if(reps < min) {
-return previousWeight - 2.5
-}
+  const lastWeight = Number(sets[0].weight)
 
-return previousWeight
+  if(!lastWeight) return null
+
+  return lastWeight + 2.5
 }
