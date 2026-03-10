@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import ExerciseCard from "./components/ExerciseCard.jsx";
+import { loadWorkout, saveWorkout } from "./utils/storage";
+
+const [workoutData, setWorkoutData] = useState(() => loadWorkout());
+
+useEffect(() => {
+  saveWorkout(workoutData);
+}, [workoutData]);
 
 const presets = {
   classic: {
