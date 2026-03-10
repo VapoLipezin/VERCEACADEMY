@@ -31,6 +31,16 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
     });
   }
 
+  function toggleSet(index){
+    const updated = [...sets];
+    updated[index].completed = !updated[index].completed;
+
+    onChange({
+      ...value,
+      sets: updated
+    });
+  }
+
   return (
     <div className="exercise-card">
 
@@ -64,11 +74,12 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
             onChange={(e) => updateSet(i, "reps", e.target.value)}
           />
 
-          <input
-            type="checkbox"
-            checked={set.completed}
-            onChange={(e) => updateSet(i, "completed", e.target.checked)}
-          />
+          <button
+            className={`set-check ${set.completed ? "done" : ""}`}
+            onClick={() => toggleSet(i)}
+          >
+            {set.completed ? "✓" : ""}
+          </button>
 
         </div>
       ))}
