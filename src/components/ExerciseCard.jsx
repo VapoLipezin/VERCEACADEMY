@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { getSuggestedWeight } from "../utils/progression"
 
 export default function ExerciseCard({ exercise, value = {}, onChange, onStartRest }) {
 
@@ -49,6 +50,8 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
   const completedSets = sets.filter(s => s.completed).length;
   const progress = (completedSets / exercise.sets) * 100;
 
+  const suggestedWeight = getSuggestedWeight(exercise, sets)
+
   return (
     <div className="exercise-card">
 
@@ -66,6 +69,12 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
               style={{ width: `${progress}%` }}
             />
           </div>
+
+          {suggestedWeight && (
+  <div className="weight-suggestion">
+    Próximo treino: {suggestedWeight} kg
+  </div>
+)}
 
         </div>
 
