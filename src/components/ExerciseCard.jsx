@@ -8,6 +8,7 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
     completed: false
   }));
 
+  // cria as séries automaticamente quando o exercício aparece
   useEffect(() => {
     if (!value.sets) {
       onChange({
@@ -31,15 +32,22 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
     });
   }
 
-  function toggleSet(index){
+  function toggleSet(index) {
     const updated = [...sets];
-    updated[index].completed = !updated[index].completed;
+    updated[index] = {
+      ...updated[index],
+      completed: !updated[index].completed
+    };
 
     onChange({
       ...value,
       sets: updated
     });
   }
+
+  // progresso do exercício
+  const completedSets = sets.filter(s => s.completed).length;
+  const progress = (completedSets / exercise.sets) * 100;
 
   return (
     <div className="exercise-card">
@@ -50,6 +58,15 @@ export default function ExerciseCard({ exercise, value = {}, onChange, onStartRe
           <p>
             {exercise.sets} séries • {exercise.reps} reps • descanso {exercise.rest}s
           </p>
+
+          {/* barra de progresso */}
+          <div className="exercise-progress">
+            <div
+              className="exercise-progress-bar"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
         </div>
 
         <button onClick={() => onStartRest(exercise.rest)}>
