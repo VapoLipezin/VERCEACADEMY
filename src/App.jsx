@@ -521,7 +521,9 @@ const weeklyProgress = useMemo(() => {
 
     {Object.keys(customPlan).map(day => {
 
-      const done = Object.values(workouts).some(d => d[day]);
+      const done = Object.values(workouts).some(week =>
+  week && Object.keys(week).includes(day)
+);
 
       return (
         <div key={day} className="plan-row">
