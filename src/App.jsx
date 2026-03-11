@@ -119,19 +119,6 @@ function getWeekKey(date = new Date()) {
   return first.toISOString().slice(0,10);
 }
 
-const weeklyProgress = useMemo(() => {
-
-  const planDays = Object.keys(customPlan);
-  const totalDays = planDays.length;
-
-  const doneDays = Object.values(workouts).reduce((acc, day) => {
-    return acc + Object.keys(day).length;
-  }, 0);
-
-  return Math.min(100, Math.round((doneDays / totalDays) * 100));
-
-}, [workouts, customPlan]);
-
 const STORAGE = {
   split: 'app-treino-split-v1',
   plan: 'app-treino-plan-v1',
@@ -234,16 +221,33 @@ const completedSets = exercises.reduce((acc, ex) => {
 
 const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
 
-  const weeklyDone = useMemo(() => {
-    return Object.values(workouts).reduce((acc, splitDays) => {
-      return (
-        acc +
-        Object.values(splitDays).reduce((sum, section) => {
-          return sum + Object.values(section).filter((item) => item.completed).length;
-        }, 0)
-      );
+const weeklyDone = useMemo(() => {
+  return Object.values(workouts).reduce((acc, splitDays) => {
+    return (
+      acc +
+      Object.values(splitDays).reduce((sum, section) => {
+        return sum + Object.values(section).filter((item) => item.completed).length;
+      }, 0)
+    );
+  }, 0);
+}, [workouts]);
+
+const weeklyProgress = useMemo(() => {
+
+  const planDays = Object.keys(customPlan);
+  const totalDays = planDays.length;
+
+  const currentWeek = getWeekKey();
+
+  const doneDays = Object.entries(workouts)
+    .filter(([date]) => date >= currentWeek)
+    .reduce((acc, [, day]) => {
+      return acc + Object.keys(day).length;
     }, 0);
-  }, [workouts]);
+
+  return totalDays ? Math.round((doneDays / totalDays) * 100) : 0;
+
+}, [workouts, customPlan]);
 
   const splitLabel = {
     classic: 'Clássico',
