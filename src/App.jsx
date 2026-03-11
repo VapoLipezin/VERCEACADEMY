@@ -114,6 +114,24 @@ const presets = {
   },
 };
 
+function getWeekKey(date = new Date()) {
+  const first = new Date(date.setDate(date.getDate() - date.getDay()));
+  return first.toISOString().slice(0,10);
+}
+
+const weeklyProgress = useMemo(() => {
+
+  const planDays = Object.keys(customPlan);
+  const totalDays = planDays.length;
+
+  const doneDays = Object.values(workouts).reduce((acc, day) => {
+    return acc + Object.keys(day).length;
+  }, 0);
+
+  return Math.min(100, Math.round((doneDays / totalDays) * 100));
+
+}, [workouts, customPlan]);
+
 const STORAGE = {
   split: 'app-treino-split-v1',
   plan: 'app-treino-plan-v1',
@@ -344,7 +362,7 @@ const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
         </section>
 
         <nav className="tab-bar">
-          {['treino', 'plano', 'perfil', 'notas'].map((tab) => (
+          {['treino', 'semana', 'plano', 'perfil', 'notas'].map((tab) => (
             <button
               key={tab}
               className={activeTab === tab ? 'tab active' : 'tab'}
@@ -479,6 +497,39 @@ const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
             ))}
           </section>
         )}
+
+        {activeTab === 'semana' && (
+  <section className="panel">
+
+    <div className="panel-card">
+      <h2>Progresso da semana</h2>
+
+      <div className="progress-track">
+        <div
+          className="progress-bar"
+          style={{ width: `${weeklyProgress}%` }}
+        />
+      </div>
+
+      <strong>{weeklyProgress}% concluído</strong>
+
+    </div>
+
+    {Object.keys(customPlan).map(day => {
+
+      const done = Object.values(workouts).some(d => d[day]);
+
+      return (
+        <div key={day} className="plan-row">
+          <strong>{day}</strong>
+          <span>{done ? "✅ feito" : "⬜ pendente"}</span>
+        </div>
+      );
+
+    })}
+
+  </section>
+)}
 
         {activeTab === 'perfil' && (
           <section className="panel">
