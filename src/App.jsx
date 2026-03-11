@@ -1,12 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import ExerciseCard from "./components/ExerciseCard.jsx";
-import { loadWorkout, saveWorkout } from "./utils/storage";
-
-const [workoutData, setWorkoutData] = useState(() => loadWorkout());
-
-useEffect(() => {
-  saveWorkout(workoutData);
-}, [workoutData]);
 
 const presets = {
   classic: {
@@ -209,16 +202,16 @@ export default function App() {
   const exercises = customPlan[selectedDay] || [];
   const dayState = workouts[todayKey()]?.[selectedDay] || {};
 
-const totalSets = exercises.reduce((acc, ex) => acc + ex.sets, 0);
+ const totalSets = exercises.reduce((acc, ex) => acc + ex.sets, 0);
 
 const completedSets = exercises.reduce((acc, ex) => {
-  const exerciseData = dayState[ex.name];
+  const exerciseState = dayState[ex.name];
 
-  if (!exerciseData?.sets) return acc;
+  if (!exerciseState?.sets) return acc;
 
-  const done = exerciseData.sets.filter((s) => s.completed).length;
+  const doneSets = exerciseState.sets.filter((s) => s.completed).length;
 
-  return acc + done;
+  return acc + doneSets;
 }, 0);
 
 const progress = totalSets ? Math.round((completedSets / totalSets) * 100) : 0;
